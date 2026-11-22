@@ -1,6 +1,6 @@
 // Book-It (Tempahan Bilik Khas) — service worker
 // Tukar VERSI setiap kali index.html dikemas kini supaya telefon guru menerima versi baharu.
-const VERSI = 'bookit-v1.9-2026-11-22';
+const VERSI = 'bookit-v1.10-2026-11-22';
 const WAJIB = ['./index.html'];
 const PILIHAN = ['./', './manifest.webmanifest', './tetapan.js', './ikon-192.png', './ikon-512.png',
   './ikon-maskable-512.png', './apple-touch-icon.png', './favicon.png', './lencana.png', './latar-sekolah.jpg'];
