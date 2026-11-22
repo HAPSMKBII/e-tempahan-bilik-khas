@@ -88,6 +88,30 @@ main{padding:0 20px 110px}
 .kepala-bilik .t2{color:#DCE6F7}
 .jadual{background:#fff;border:1.5px dashed var(--garis);border-radius:14px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:8px;margin-top:4px}
 .jadual:empty{display:none}
+.minggu{background:#fff;border:1.5px solid var(--garis2);border-radius:16px;padding:10px;margin-top:4px;display:flex;flex-direction:column;gap:6px}
+.minggu .kepala{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 4px}
+.ikon-kecil{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--garis);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--teks)}
+.ikon-kecil:disabled{opacity:.35;cursor:default}
+.hari{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:left;background:#F9FAFC;border:1.5px solid transparent;border-radius:12px;padding:8px 10px;cursor:pointer;min-height:48px}
+.hari:disabled{cursor:default;opacity:.5}
+.hari[aria-pressed="true"]{border-color:var(--utama);background:#EEF3FB}
+.hari .tkh{width:46px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;line-height:1.15}
+.hari .tkh b{font-size:17px}
+.hari .tkh span{font-size:11px;color:var(--redup);font-weight:600}
+.hari .isi{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding-top:3px}
+.slot{font-size:11px;font-weight:700;padding:4px 7px;border-radius:8px;white-space:nowrap}
+.slot.l{background:#E3F5EA;color:#1D6B3A}.slot.m{background:#FFF1D6;color:#7A4F00}
+.semak-ulang{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:14px;font-weight:700;color:#3B465C;cursor:pointer}
+.semak-ulang input{width:22px;height:22px;accent-color:var(--utama);flex-shrink:0}
+select{width:100%;height:50px;border:1.5px solid var(--garis);border-radius:14px;padding:0 12px;font-size:16px;background:#F9FAFC;font-family:inherit;color:inherit}
+.tag{font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;background:#E4ECFA;color:#1E4B8F;align-self:flex-start}
+.senarai-tkh{display:flex;flex-wrap:wrap;gap:6px}
+.senarai-tkh span{font-size:12px;font-weight:600;background:#F6F8FB;border:1px solid var(--garis2);border-radius:8px;padding:4px 8px}
+.stat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat div{background:#fff;border:1.5px solid var(--garis2);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-size:24px;font-weight:800}
+.bar{height:8px;border-radius:4px;background:#E6EAF1;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--utama);border-radius:4px}
 
 /* Status */
 .cip{font-size:11px;font-weight:700;padding:5px 9px;border-radius:999px;white-space:nowrap;flex-shrink:0}
@@ -164,7 +188,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
-    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.4 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.5 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
@@ -207,7 +231,15 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
           <label for="in-tarikh">Tarikh penggunaan</label>
           <input id="in-tarikh" type="date" required>
           <span class="t2" id="nota-tarikh"></span>
-          <div class="jadual" id="jadual" aria-live="polite"></div>
+          <div class="minggu" id="minggu">
+            <div class="kepala">
+              <button type="button" class="ikon-kecil" id="mg-sebelum" aria-label="Minggu sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+              <span class="t1" id="mg-tajuk" style="font-size:13px;text-align:center"></span>
+              <button type="button" class="ikon-kecil" id="mg-selepas" aria-label="Minggu seterusnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            </div>
+            <div id="mg-hari" style="display:flex;flex-direction:column;gap:6px" aria-live="polite"></div>
+            <span class="t2" style="padding:2px 4px">Tekan hari untuk memilih tarikh. <span class="slot l">Lulus</span> <span class="slot m">Menunggu</span></span>
+          </div>
           <div class="dua">
             <div><label for="in-mula">Masa mula</label><input id="in-mula" type="time" step="300" required></div>
             <div><label for="in-tamat">Masa tamat</label><input id="in-tamat" type="time" step="300" required></div>
@@ -216,6 +248,12 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
           <input id="in-kelas" maxlength="60" placeholder="cth: 4 Bestari" required>
           <label for="in-tujuan">Tujuan penggunaan</label>
           <textarea id="in-tujuan" maxlength="300" placeholder="cth: Amali Sains Komputer Bab 3" required></textarea>
+          <label class="semak-ulang" for="in-ulang"><input type="checkbox" id="in-ulang">Ulang setiap minggu (hari &amp; masa yang sama)</label>
+          <div id="kotak-ulang" class="borang" hidden>
+            <label for="in-minggu">Bilangan minggu (termasuk minggu ini)</label>
+            <select id="in-minggu"><option value="2">2 minggu</option><option value="3">3 minggu</option><option value="4" selected>4 minggu</option><option value="5">5 minggu</option><option value="6">6 minggu</option><option value="7">7 minggu</option><option value="8">8 minggu</option></select>
+            <span class="t2" id="nota-ulang"></span>
+          </div>
           <p class="ralat" id="e-tempah" role="alert"></p>
           <button id="b-tempah" class="btn utama" type="submit" style="margin-top:8px">Hantar Tempahan</button>
         </form>
@@ -223,6 +261,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
 
       <!-- Panel: Tempahan saya -->
       <div id="p-saya" hidden>
+        <div class="amaran" id="amaran-saya" hidden></div>
         <div class="cips" id="cip-saya">
           <button type="button" data-t="datang">Akan datang</button>
           <button type="button" data-t="lepas">Lepas</button>
@@ -265,7 +304,22 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
           <p class="ralat" id="e-tukar" role="alert"></p>
           <button id="b-tukar" class="btn utama" type="submit" style="margin-top:6px">Simpan Kata Laluan</button>
         </form>
+        <button type="button" class="btn kedua" id="b-laporan" style="margin-top:14px" hidden>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15v3M12 10v8M17 6v12"/></svg>Laporan Penggunaan Bilik
+        </button>
         <button type="button" class="btn garis-merah" id="b-keluar" style="margin-top:14px">Log Keluar</button>
+      </div>
+
+      <!-- Panel: Laporan (pentadbir) -->
+      <div id="p-laporan" hidden>
+        <button type="button" class="btn kedua kecil" id="b-balik-profil" style="width:auto;padding:0 14px;margin-bottom:12px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>Profil
+        </button>
+        <div class="borang" style="margin-bottom:14px">
+          <label for="in-bulan">Bulan</label>
+          <input id="in-bulan" type="month">
+        </div>
+        <div id="isi-laporan" style="display:flex;flex-direction:column;gap:12px"></div>
       </div>
     </main>
 
@@ -301,7 +355,11 @@ const HARI = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
 const BULAN = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
 const STATUS = { MENUNGGU: ['Menunggu', 'c-tunggu'], DILULUSKAN: ['Diluluskan', 'c-lulus'], DITOLAK: ['Ditolak', 'c-tolak'], DIBATALKAN: ['Dibatalkan', 'c-batal'] };
 const WARNA = [['#E4ECFA', '#1E4B8F'], ['#E2F3F1', '#0F6E66'], ['#F1E6F7', '#6B2E8F'], ['#FBEBDD', '#9A3412']];
-const TAJUK = { tempah: 'Tempah Bilik', saya: 'Tempahan Saya', semak: 'Semakan Penyelaras', profil: 'Profil Saya' };
+const TAJUK = { tempah: 'Tempah Bilik', saya: 'Tempahan Saya', semak: 'Semakan Penyelaras', profil: 'Profil Saya', laporan: 'Laporan Penggunaan' };
+/** Tambah n hari kepada 'yyyy-mm-dd'. */
+function tambahHari(s, n) { const p = s.split('-').map(Number); const d = new Date(Date.UTC(p[0], p[1] - 1, p[2] + n, 12)); return d.toISOString().slice(0, 10); }
+/** Isnin bagi minggu yang mengandungi tarikh s. */
+function isnin(s) { const p = s.split('-').map(Number); const h = new Date(Date.UTC(p[0], p[1] - 1, p[2], 12)).getUTCDay(); return tambahHari(s, -((h + 6) % 7)); }
 
 /* ---------- Pembantu ---------- */
 function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
@@ -364,9 +422,9 @@ function masuk() {
 
 function bukaPanel(p) {
   S.panel = p;
-  ['bilik', 'tempah', 'saya', 'semak', 'profil'].forEach(x => { $('#p-' + x).hidden = x !== p; });
+  ['bilik', 'tempah', 'saya', 'semak', 'profil', 'laporan'].forEach(x => { $('#p-' + x).hidden = x !== p; });
   $$('nav.bawah button').forEach(b => {
-    const aktif = b.dataset.p === p || (p === 'tempah' && b.dataset.p === 'bilik');
+    const aktif = b.dataset.p === p || (p === 'tempah' && b.dataset.p === 'bilik') || (p === 'laporan' && b.dataset.p === 'profil');
     if (aktif) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
   $('nav.bawah').hidden = !!S.profil.mestiTukar;
@@ -377,6 +435,7 @@ function bukaPanel(p) {
   if (p === 'saya') muatSaya();
   if (p === 'semak') muatSemak();
   if (p === 'profil') lukisProfil();
+  if (p === 'laporan') muatLaporan();
 }
 
 /* ---------- Log masuk / keluar ---------- */
@@ -451,22 +510,76 @@ function bukaTempah(id) {
   ['#in-mula', '#in-tamat'].forEach(s => { $(s).min = t.masaAwal; $(s).max = t.masaAkhir; });
   $('#nota-tarikh').textContent = 'Tempahan dibuka dari ' + tarikhPapar(t.minTarikh) + ' hingga ' + tarikhPapar(t.maksTarikh) + '. Masa: ' + t.masaAwal + '–' + t.masaAkhir + '.';
   $('#e-tempah').textContent = '';
+  S.mg = isnin(tar.value);
+  $('#in-ulang').checked = false; $('#kotak-ulang').hidden = true;
   bukaPanel('tempah');
   muatJadual();
 }
 
 async function muatJadual() {
-  const el = $('#jadual'), tarikh = $('#in-tarikh').value;
-  if (!S.pilih || !tarikh) { el.innerHTML = ''; return; }
-  el.innerHTML = '<span class="t2">Menyemak jadual bilik…</span>';
+  const el = $('#mg-hari');
+  if (!S.pilih) { el.innerHTML = ''; return; }
+  const t = S.tetapan, mula = S.mg || isnin($('#in-tarikh').value || t.minTarikh);
+  S.mg = mula;
+  const akhir = tambahHari(mula, 6);
+  $('#mg-tajuk').textContent = tarikhPapar(mula).replace(/^\w+, /, '') + ' – ' + tarikhPapar(akhir).replace(/^\w+, /, '');
+  $('#mg-sebelum').disabled = tambahHari(mula, -1) < t.minTarikh;
+  $('#mg-selepas').disabled = tambahHari(mula, 7) > t.maksTarikh;
+  el.innerHTML = '<span class="t2" style="padding:6px 4px">Menyemak jadual bilik…</span>';
   try {
-    const r = await panggil('jadualBilik', S.token, S.pilih.id, tarikh);
-    if (tarikh !== $('#in-tarikh').value) return; // tarikh sudah ditukar
-    el.innerHTML = '<span class="t1" style="font-size:13px">Jadual ' + esc(tarikhPapar(tarikh)) + '</span>' +
-      (r.length
-        ? r.map(x => '<div class="baris"><span class="t3"><b>' + esc(x.mula) + '–' + esc(x.tamat) + '</b> · ' + esc(x.nama) + '</span>' + cip(x.status) + '</div>').join('')
-        : '<span class="t2">Belum ada tempahan. Semua masa masih kosong.</span>');
+    const r = await panggil('jadualMinggu', S.token, S.pilih.id, mula);
+    if (mula !== S.mg) return; // minggu sudah ditukar
+    if (r.tetapan) S.tetapan = r.tetapan;
+    lukisMinggu(r.hari);
   } catch (e) { el.innerHTML = '<span class="ralat">' + esc(mesej(e)) + '</span>'; }
+}
+
+function lukisMinggu(hari) {
+  S.hariMinggu = hari;
+  const t = S.tetapan, pilih = $('#in-tarikh').value;
+  $('#mg-hari').innerHTML = hari.map(h => {
+    const tutup = h.tarikh < t.minTarikh || h.tarikh > t.maksTarikh;
+    const p = h.tarikh.split('-').map(Number);
+    const namaHari = HARI[new Date(p[0], p[1] - 1, p[2]).getDay()];
+    const isi = h.tempahan.length
+      ? h.tempahan.map(x => '<span class="slot ' + (x.status === 'DILULUSKAN' ? 'l' : 'm') + '" title="' + esc(x.nama) + '">' + esc(x.mula) + '–' + esc(x.tamat) + '</span>').join('')
+      : '<span class="t2">' + (tutup ? (h.tarikh < t.minTarikh ? 'Tidak boleh ditempah' : 'Belum dibuka') : 'Kosong sepanjang hari') + '</span>';
+    return '<button type="button" class="hari" data-tarikh="' + h.tarikh + '" aria-pressed="' + (h.tarikh === pilih) + '"' + (tutup ? ' disabled' : '') + '>' +
+      '<span class="tkh"><span>' + namaHari + '</span><b>' + p[2] + '</b><span>' + BULAN[p[1] - 1] + '</span></span>' +
+      '<span class="isi">' + isi + '</span></button>';
+  }).join('');
+  notaUlang();
+}
+
+function tukarMinggu(n) { S.mg = tambahHari(S.mg, 7 * n); muatJadual(); }
+
+function pilihHari(ev) {
+  const b = ev.target.closest('[data-tarikh]');
+  if (!b || b.disabled) return;
+  $('#in-tarikh').value = b.dataset.tarikh;
+  $$('#mg-hari .hari').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  notaUlang();
+}
+
+function tarikhDiubah() {
+  const v = $('#in-tarikh').value;
+  if (!v) return;
+  const m = isnin(v);
+  if (m !== S.mg) { S.mg = m; muatJadual(); }
+  else { $$('#mg-hari .hari').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.tarikh === v))); notaUlang(); }
+}
+
+function notaUlang() {
+  const kotak = $('#kotak-ulang'), on = $('#in-ulang').checked;
+  kotak.hidden = !on;
+  if (!on) return;
+  const n = Number($('#in-minggu').value), mula = $('#in-tarikh').value, maks = S.tetapan.maksTarikh;
+  if (!mula) { $('#nota-ulang').textContent = ''; return; }
+  const l = []; for (let i = 0; i < n; i++) l.push(tambahHari(mula, i * 7));
+  const ok = l.filter(x => x <= maks), luar = l.length - ok.length;
+  $('#nota-ulang').textContent = 'Tempahan akan dibuat pada: ' + ok.map(x => tarikhPapar(x).replace(/ \d{4}$/, '')).join(' · ') + '.' +
+    (luar ? ' ' + luar + ' minggu melebihi had tempahan dan akan dilangkau.' : '') +
+    ' Tarikh yang bertindih dengan tempahan lain juga akan dilangkau.';
 }
 
 async function hantarTempahan(ev) {
@@ -476,17 +589,24 @@ async function hantarTempahan(ev) {
   const d = {
     idBilik: S.pilih.id, tarikh: $('#in-tarikh').value,
     mula: $('#in-mula').value, tamat: $('#in-tamat').value,
-    kelas: $('#in-kelas').value.trim(), tujuan: $('#in-tujuan').value.trim()
+    kelas: $('#in-kelas').value.trim(), tujuan: $('#in-tujuan').value.trim(),
+    ulang: $('#in-ulang').checked ? Number($('#in-minggu').value) : 1
   };
   if (!d.tarikh || !d.mula || !d.tamat || !d.kelas || !d.tujuan) { err.textContent = 'Sila lengkapkan semua ruangan.'; return; }
   if (d.tamat <= d.mula) { err.textContent = 'Masa tamat mesti selepas masa mula.'; return; }
   b.disabled = true; b.textContent = 'Menghantar…';
   try {
-    await panggil('hantarTempahan', S.token, d);
-    toast('Tempahan dihantar. Menunggu kelulusan penyelaras.');
+    const r = await panggil('hantarTempahan', S.token, d);
+    const dibuat = (r && r.dibuat) || [d.tarikh], langkau = (r && r.dilangkau) || [];
+    toast(dibuat.length > 1 ? dibuat.length + ' tempahan dihantar. Menunggu kelulusan penyelaras.' : 'Tempahan dihantar. Menunggu kelulusan penyelaras.');
     $('#in-tujuan').value = ''; $('#in-mula').value = ''; $('#in-tamat').value = '';
+    $('#in-ulang').checked = false; $('#kotak-ulang').hidden = true;
     S.tapis = 'datang';
     bukaPanel('saya');
+    const am = $('#amaran-saya');
+    am.hidden = !langkau.length;
+    am.innerHTML = langkau.length ? '<b>' + dibuat.length + ' tarikh berjaya ditempah.</b> ' + langkau.length + ' tarikh dilangkau:<br>' +
+      langkau.map(x => '• ' + esc(tarikhPapar(x.tarikh)) + ' – ' + esc(x.sebab)).join('<br>') : '';
   } catch (e) {
     err.textContent = mesej(e);
     muatJadual();
@@ -498,6 +618,7 @@ async function hantarTempahan(ev) {
 /* ---------- Tempahan saya ---------- */
 async function muatSaya() {
   const el = $('#senarai-saya');
+  if (S.panel !== 'saya') $('#amaran-saya').hidden = true;
   el.innerHTML = muat();
   lukisCipSaya();
   try {
@@ -520,6 +641,7 @@ function lukisSaya() {
   $('#senarai-saya').innerHTML = l.length ? l.map(t =>
     '<article class="kad">' +
     '<div class="baris"><span class="t1">' + esc(t.bilik) + '</span>' + cip(t.status) + '</div>' +
+    (t.kumpulan ? '<span class="tag">Berulang mingguan</span>' : '') +
     '<span class="t3">' + esc(tarikhPapar(t.tarikh)) + ' · ' + esc(t.mula) + '–' + esc(t.tamat) + ' · ' + esc(t.kelas) + '</span>' +
     '<span class="t2">' + esc(t.tujuan) + '</span>' +
     (t.ulasan ? '<div class="ulasan' + (t.status === 'DITOLAK' ? '' : ' ok') + '">Ulasan penyelaras: ' + esc(t.ulasan) + '</div>' : '') +
@@ -572,10 +694,19 @@ function lencana() {
 function lukisSemak() {
   $$('.tab button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.tab === S.tab)));
   const menunggu = S.tab === 'menunggu';
-  const l = S.semak ? (menunggu ? S.semak.menunggu : S.semak.selesai) : [];
+  let l = S.semak ? (menunggu ? S.semak.menunggu : S.semak.selesai) : [];
+  if (menunggu) { // satu kad bagi setiap kumpulan tempahan berulang
+    const kump = {}, hasil = [];
+    l.forEach(t => {
+      if (!t.kumpulan) { hasil.push(t); return; }
+      if (!kump[t.kumpulan]) { kump[t.kumpulan] = Object.assign({}, t, { tarikhKumpulan: [] }); hasil.push(kump[t.kumpulan]); }
+      kump[t.kumpulan].tarikhKumpulan.push(t.tarikh);
+    });
+    l = hasil;
+  }
   const am = $('#amaran-semak');
   am.hidden = !(menunggu && l.length);
-  am.innerHTML = '<b>' + l.length + ' permohonan</b> menunggu keputusan anda.';
+  am.innerHTML = '<b>' + (S.semak ? S.semak.menunggu.length : 0) + ' permohonan</b> menunggu keputusan anda.';
   $('#senarai-semak').innerHTML = l.length ? l.map(menunggu ? kadMenunggu : kadSelesai).join('')
     : '<p class="kosong">' + (menunggu ? 'Tiada permohonan yang menunggu.' : 'Belum ada rekod.') + '</p>';
 }
@@ -590,10 +721,14 @@ function infoGrid(t) {
 }
 
 function kadMenunggu(t) {
-  return '<article class="kad" data-k="' + esc(t.id) + '">' +
+  const kump = t.tarikhKumpulan && t.tarikhKumpulan.length > 1;
+  return '<article class="kad" data-k="' + esc(t.id) + '"' + (kump ? ' data-semua="1"' : '') + '>' +
     '<div class="baris"><div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span class="t1">' + esc(t.pemohon) + '</span>' +
     '<span class="t2">Dihantar ' + esc(t.dibuat) + '</span></div>' + cip(t.status) + '</div>' +
+    (kump ? '<span class="tag">Berulang mingguan · ' + t.tarikhKumpulan.length + ' tarikh</span>' : '') +
     infoGrid(t) +
+    (kump ? '<div class="senarai-tkh">' + t.tarikhKumpulan.map(x => '<span>' + esc(tarikhPapar(x).replace(/ \d{4}$/, '')) + '</span>').join('') + '</div>' +
+      '<span class="t2">Keputusan anda akan dikenakan kepada semua ' + t.tarikhKumpulan.length + ' tarikh.</span>' : '') +
     '<label class="sr" for="ul-' + esc(t.id) + '">Ulasan</label>' +
     '<input id="ul-' + esc(t.id) + '" maxlength="300" placeholder="Ulasan (wajib jika menolak)">' +
     '<div class="aksi">' +
@@ -619,8 +754,10 @@ async function klikSemak(ev) {
   kad.querySelectorAll('button').forEach(x => { x.disabled = true; });
   b.textContent = keputusan === 'LULUS' ? 'Meluluskan…' : 'Menolak…';
   try {
-    await panggil('putuskan', S.token, kad.dataset.k, keputusan, ulasan);
-    toast(keputusan === 'LULUS' ? 'Tempahan diluluskan. Pemohon telah dimaklumkan.' : 'Tempahan ditolak. Pemohon telah dimaklumkan.');
+    const r = await panggil('putuskan', S.token, kad.dataset.k, keputusan, ulasan, kad.dataset.semua === '1');
+    const n = (r && r.diputuskan) || 1, langkau = (r && r.dilangkau) || [];
+    toast((n > 1 ? n + ' tarikh ' : 'Tempahan ') + (keputusan === 'LULUS' ? 'diluluskan' : 'ditolak') + '. Pemohon telah dimaklumkan.' +
+      (langkau.length ? ' ' + langkau.length + ' tarikh tidak dapat diluluskan kerana bertindih.' : ''));
     muatSemak();
   } catch (e) {
     toast(mesej(e));
@@ -637,6 +774,35 @@ function lukisProfil() {
   $('#pr-emel').textContent = p.emel || '';
   $('#amaran-tukar').hidden = !p.mestiTukar;
   $('#e-tukar').textContent = '';
+  $('#b-laporan').hidden = !p.admin || !!p.mestiTukar;
+}
+
+/* ---------- Laporan penggunaan (pentadbir) ---------- */
+async function muatLaporan() {
+  const inp = $('#in-bulan');
+  if (!inp.value) inp.value = (S.tetapan.hariIni || new Date().toISOString()).slice(0, 7);
+  const el = $('#isi-laporan');
+  el.innerHTML = muat();
+  try { lukisLaporan(await panggil('laporanBulanan', S.token, inp.value)); }
+  catch (e) { el.innerHTML = '<p class="kosong">' + esc(mesej(e)) + '</p>'; }
+}
+
+function lukisLaporan(r) {
+  const s = r.status;
+  const maksB = Math.max(1, ...r.bilik.map(b => b.jam));
+  const kad = (n, l) => '<div><span class="t2">' + l + '</span><b>' + esc(n) + '</b></div>';
+  $('#isi-laporan').innerHTML =
+    '<div class="stat">' + kad(r.jumlah, 'Jumlah permohonan') + kad(r.jamDigunakan, 'Jam bilik digunakan') +
+    kad(s.lulus, 'Diluluskan') + kad(s.menunggu, 'Menunggu') + kad(s.tolak, 'Ditolak') + kad(s.batal, 'Dibatalkan') + '</div>' +
+    '<div class="kad"><span class="t1">Penggunaan mengikut bilik</span>' +
+    (r.bilik.length ? r.bilik.map(b => '<div style="display:flex;flex-direction:column;gap:4px">' +
+      '<div class="baris"><span class="t3"><b>' + esc(b.nama) + '</b></span><span class="t2">' + b.tempahan + ' tempahan · ' + b.jam + ' jam</span></div>' +
+      '<div class="bar" role="img" aria-label="' + esc(b.nama) + ' ' + b.jam + ' jam"><i style="width:' + Math.round(b.jam / maksB * 100) + '%"></i></div></div>').join('')
+      : '<span class="t2">Tiada bilik.</span>') + '</div>' +
+    '<div class="kad"><span class="t1">Guru paling kerap menempah</span>' +
+    (r.guru.length ? r.guru.map((g, i) => '<div class="baris"><span class="t3">' + (i + 1) + '. ' + esc(g.nama) + '</span><span class="t2">' + g.tempahan + ' tempahan · ' + g.jam + ' jam</span></div>').join('')
+      : '<span class="t2">Tiada tempahan diluluskan bagi bulan ini.</span>') + '</div>' +
+    '<span class="t2">Hanya tempahan yang diluluskan dikira dalam jam penggunaan. Laporan bulan lepas juga dihantar ke emel pentadbir pada 1 haribulan setiap bulan.</span>';
 }
 
 async function tukarKataLaluan(ev) {
@@ -671,7 +837,15 @@ $('#b-lihat').addEventListener('click', () => {
 $('#in-cari').addEventListener('input', lukisBilik);
 $('#senarai-bilik').addEventListener('click', ev => { const k = ev.target.closest('[data-id]'); if (k) bukaTempah(k.dataset.id); });
 $('#b-balik').addEventListener('click', () => bukaPanel('bilik'));
-$('#in-tarikh').addEventListener('change', muatJadual);
+$('#in-tarikh').addEventListener('change', tarikhDiubah);
+$('#mg-hari').addEventListener('click', pilihHari);
+$('#mg-sebelum').addEventListener('click', () => tukarMinggu(-1));
+$('#mg-selepas').addEventListener('click', () => tukarMinggu(1));
+$('#in-ulang').addEventListener('change', notaUlang);
+$('#in-minggu').addEventListener('change', notaUlang);
+$('#b-laporan').addEventListener('click', () => bukaPanel('laporan'));
+$('#b-balik-profil').addEventListener('click', () => bukaPanel('profil'));
+$('#in-bulan').addEventListener('change', muatLaporan);
 $('#f-tempah').addEventListener('submit', hantarTempahan);
 $('#cip-saya').addEventListener('click', ev => { const b = ev.target.closest('[data-t]'); if (b) { S.tapis = b.dataset.t; lukisSaya(); } });
 $('#senarai-saya').addEventListener('click', klikSaya);
