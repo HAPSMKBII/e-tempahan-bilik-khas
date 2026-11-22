@@ -1,5 +1,5 @@
 /* =================================================================
-   TETAPAN e-Tempahan Bilik Khas - SMK BUGAYA II
+   TETAPAN Book-It (Tempahan Bilik Khas) - SMK BUGAYA II
    -----------------------------------------------------------------
    Tampal pautan "Web app URL" daripada Apps Script (berakhir dengan
    /exec) di antara tanda petik di bawah, contohnya:
