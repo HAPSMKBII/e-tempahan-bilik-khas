@@ -1,12 +1,14 @@
 BOOK-IT (TEMPAHAN BILIK KHAS) SMK BUGAYA II - CARA HOS DI GITHUB
 =======================================================
 
-Folder ini mengandungi 10 fail. JANGAN tukar nama fail.
+Folder ini mengandungi 12 fail. JANGAN tukar nama fail.
   index.html             - aplikasi tempahan (paparan telefon)
   tetapan.js             - pautan ke pelayan Apps Script (API_URL)
   manifest.webmanifest   - maklumat aplikasi (nama, ikon)
   sw.js                  - membolehkan aplikasi dibuka tanpa internet
   ikon-*.png, apple-touch-icon.png, favicon.png - ikon aplikasi
+  lencana.png            - lencana sekolah di skrin log masuk
+  latar-sekolah.jpg      - gambar sekolah (latar skrin log masuk)
   BACA_SAYA.txt          - panduan ini
 
 PENTING: Data tempahan disimpan dalam Google Sheet anda melalui Apps Script.
@@ -43,7 +45,9 @@ KEMAS KINI PADA MASA HADAPAN
 1. Gantikan index.html dengan versi baharu.
 2. Buka sw.js dan tukar  VERSI = 'bookit-v1.3-...'  kepada versi baharu
    (contoh 'bookit-v1.4-2026-12-01').
-3. Muat naik semula. Telefon guru menerima versi baharu apabila dibuka dengan internet.
+3. Dalam index.html, tukar juga tulisan  Versi 1.4 · 22 November 2026
+   (di bawah skrin log masuk) kepada versi dan tarikh baharu.
+4. Muat naik semula. Telefon guru menerima versi baharu apabila dibuka dengan internet.
    Jika hanya Code.gs berubah: deploy versi baharu di Apps Script sahaja
    (pautan /exec kekal sama, tidak perlu ubah GitHub).
 

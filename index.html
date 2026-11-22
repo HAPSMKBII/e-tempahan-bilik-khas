@@ -28,11 +28,12 @@ button,input,textarea{font:inherit;color:inherit}
 /* Log masuk */
 #v-login:not([hidden]){display:flex;flex-direction:column;min-height:100vh}
 .oleh{margin:0 0 10px;font-size:12px;font-weight:600;color:#DCE6F7;letter-spacing:.02em}
+.versi{display:block;margin-top:4px;font-size:11px;font-weight:500;color:var(--redup)}
 .kaki{margin-top:auto;padding:14px 24px calc(18px + env(safe-area-inset-bottom));font-size:12px;font-weight:700;color:#3B465C;text-align:center;border-top:1px solid var(--garis2)}
-.hero{background:var(--utama);padding:20px 28px 92px;display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:0 0 32px 32px;text-align:center}
+.hero{background:linear-gradient(180deg,rgba(14,38,82,.55) 0%,rgba(14,38,82,.70) 45%,rgba(22,58,112,.92) 100%),url('latar-sekolah.jpg') center 35%/cover no-repeat,var(--utama);padding:36px 28px 88px;display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:0 0 32px 32px;text-align:center}
 .logo{width:72px;height:72px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center}
-.hero h1{margin:0;font-size:32px;letter-spacing:-.01em;font-weight:800;color:#fff}
-.hero p{margin:0;font-size:14px;color:#DCE6F7;font-weight:700;letter-spacing:.06em}
+.hero h1{text-shadow:0 2px 10px rgba(0,0,0,.45);margin:0;font-size:32px;letter-spacing:-.01em;font-weight:800;color:#fff}
+.hero p{text-shadow:0 1px 6px rgba(0,0,0,.5);margin:0;font-size:14px;color:#DCE6F7;font-weight:700;letter-spacing:.06em}
 .kad-login{margin:-56px 20px 0;background:#fff;border-radius:24px;padding:26px 22px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 30px rgba(23,32,51,.10);position:relative}
 .kad-login h2{margin:0 0 6px;font-size:19px}
 .nota{font-size:12px;color:var(--redup);text-align:center;padding:24px 32px;line-height:1.6;margin:0}
@@ -136,8 +137,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
   <!-- ===================== LOG MASUK ===================== -->
   <section id="v-login">
     <div class="hero">
-      <p class="oleh">Oleh Cikgu HAP - SMK Bugaya II</p>
-      <img src="ikon-192.png" alt="" width="80" height="80" style="width:80px;height:80px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)">
+      <img src="lencana.png" alt="Lencana SMK Bugaya II" width="150" height="144" style="width:150px;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))">
       <h1>Book-It</h1>
       <p>Tempahan Bilik Khas · SMK BUGAYA II</p>
     </div>
@@ -164,7 +164,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
-    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja</p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.4 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
