@@ -152,8 +152,17 @@ select{width:100%;height:50px;border:1.5px solid var(--garis);border-radius:14px
 .profil{display:flex;align-items:center;gap:14px}
 .avatar{width:52px;height:52px;border-radius:50%;background:#E4ECFA;color:var(--utama);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;overflow:hidden;background-size:cover;background-position:center}
 .avatar.ada{color:transparent}
-.avatar.besar{width:84px;height:84px;font-size:28px;border:3px solid #fff;box-shadow:0 4px 14px rgba(23,32,51,.15)}
+.avatar.besar{width:128px;height:128px;font-size:42px;border:4px solid #fff;box-shadow:0 6px 20px rgba(23,32,51,.18)}
+.profil.tengah{flex-direction:column;text-align:center;gap:10px;padding:6px 0 2px}
+.profil.tengah>div{align-items:center}
 .avatar.kecil{width:44px;height:44px;font-size:15px}
+.av-btn{position:relative;border:0;background:none;padding:0;cursor:pointer;flex-shrink:0;border-radius:50%}
+.lencana-kamera{position:absolute;right:2px;bottom:4px;width:38px;height:38px;border-radius:50%;background:var(--utama);border:3px solid #fff;display:flex;align-items:center;justify-content:center}
+.helaian-latar{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.helaian{width:100%;max-width:480px;background:#fff;border-radius:22px 22px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:6px}
+.pemegang{width:40px;height:5px;border-radius:3px;background:#D5DAE3;align-self:center;margin-bottom:6px}
+.pil{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 12px;border-radius:14px;border:0;background:#F6F8FB;font-size:15px;font-weight:700;color:var(--teks);cursor:pointer;text-align:left;width:100%}
+.pil.merah{color:var(--merah)}
 .gambar-aksi{display:flex;gap:8px;flex-wrap:wrap}
 .gambar-aksi .btn{width:auto;padding:0 14px;flex:1}
 
@@ -205,7 +214,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
-    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.7 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.8 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
@@ -311,22 +320,18 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <div id="p-profil" hidden>
         <div class="amaran" id="amaran-tukar" hidden><b>Sila tukar kata laluan anda</b> sebelum mula menggunakan sistem.</div>
         <div class="kad" style="margin-bottom:14px;gap:12px">
-          <div class="profil">
-            <span class="avatar besar" id="pr-av" role="img" aria-label="Gambar profil"></span>
+          <div class="profil tengah">
+            <button type="button" class="av-btn" id="b-av" aria-label="Gambar profil: tukar atau buang">
+              <span class="avatar besar" id="pr-av"></span>
+              <span class="lencana-kamera" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg></span>
+            </button>
             <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
-              <span class="t1" id="pr-nama"></span>
+              <span class="t1" id="pr-nama" style="font-size:18px"></span>
               <span class="t2" id="pr-id"></span>
               <span class="t2" id="pr-emel" style="word-break:break-all"></span>
             </div>
           </div>
-          <div class="gambar-aksi">
-            <label class="btn kedua kecil" for="in-gambar" style="cursor:pointer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span id="t-gambar">Letak gambar profil</span>
-            </label>
-            <input id="in-gambar" type="file" accept="image/*" class="sr">
-            <button type="button" class="btn garis-merah kecil" id="b-buang-gambar" hidden>Buang gambar</button>
-          </div>
-          <span class="t2">Gambar disimpan dalam peranti ini sahaja. Ia tidak dihantar ke sekolah atau pelayan, dan tidak dilihat oleh pengguna lain.</span>
+          <input id="in-gambar" type="file" accept="image/*" class="sr">
         </div>
         <form id="f-tukar" class="kad borang">
           <span class="t1">Tukar kata laluan</span>
@@ -376,6 +381,16 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
   </section>
 </div>
 
+<div class="helaian-latar" id="helaian-gambar" hidden>
+  <div class="helaian" role="dialog" aria-modal="true" aria-labelledby="hg-tajuk">
+    <span class="pemegang" aria-hidden="true"></span>
+    <span class="t1" id="hg-tajuk">Gambar profil</span>
+    <label class="pil" for="in-gambar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg><span id="t-gambar">Tukar gambar</span></label>
+    <button type="button" class="pil merah" id="b-buang-gambar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Buang gambar</button>
+    <span class="t2" style="padding:4px 4px 0">Gambar disimpan dalam peranti ini sahaja dan tidak dihantar ke pelayan.</span>
+    <button type="button" class="btn kedua kecil" id="b-tutup-helaian" style="margin-top:6px">Batal</button>
+  </div>
+</div>
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="tetapan.js"></script>
 <script>
@@ -851,6 +866,7 @@ function lukisAvatar() {
   const ada = !!ambilGambar();
   $('#b-buang-gambar').hidden = !ada;
   $('#t-gambar').textContent = ada ? 'Tukar gambar' : 'Letak gambar profil';
+  $('#b-av').setAttribute('aria-label', ada ? 'Gambar profil: tukar atau buang' : 'Letak gambar profil');
 }
 
 /** Potong gambar kepada segi empat sama 256×256 (JPEG) supaya kecil untuk disimpan. */
@@ -872,6 +888,7 @@ function kecilkanGambar(fail) {
 async function pilihGambar(ev) {
   const fail = ev.target.files && ev.target.files[0];
   ev.target.value = '';
+  tutupHelaian();
   if (!fail) return;
   if (!/^image\//.test(fail.type || 'image/')) { toast('Sila pilih fail gambar.'); return; }
   try {
@@ -885,8 +902,20 @@ async function pilihGambar(ev) {
 
 function buangGambar() {
   simpan(kunciGambar(), null);
+  tutupHelaian();
   lukisAvatar();
   toast('Gambar profil dibuang.');
+}
+
+function bukaHelaian() {
+  lukisAvatar();
+  $('#helaian-gambar').hidden = false;
+  setTimeout(() => { const f = $('#helaian-gambar .pil'); if (f) f.focus(); }, 50);
+}
+function tutupHelaian() {
+  if ($('#helaian-gambar').hidden) return;
+  $('#helaian-gambar').hidden = true;
+  $('#b-av').focus();
 }
 
 /* ---------- Profil ---------- */
@@ -978,6 +1007,12 @@ $('#f-tukar').addEventListener('submit', tukarKataLaluan);
 $('#b-keluar').addEventListener('click', () => keluar(false));
 $('#in-gambar').addEventListener('change', pilihGambar);
 $('#b-buang-gambar').addEventListener('click', buangGambar);
+$('#b-av').addEventListener('click', bukaHelaian);
+$('#b-tutup-helaian').addEventListener('click', tutupHelaian);
+$('#helaian-gambar').addEventListener('click', ev => { if (ev.target.id === 'helaian-gambar') tutupHelaian(); });
+$('#helaian-gambar .pil').setAttribute('tabindex', '0');
+$('#helaian-gambar .pil').addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); $('#in-gambar').click(); } });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') tutupHelaian(); });
 $$('nav.bawah button').forEach(b => b.addEventListener('click', () => bukaPanel(b.dataset.p)));
 $('#b-segar').addEventListener('click', () => {
   if (S.panel === 'tempah') muatJadual(); else bukaPanel(S.panel);
