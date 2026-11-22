@@ -188,7 +188,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
-    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.5 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.5.1 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
@@ -481,7 +481,7 @@ async function muatBilik() {
 
 function lukisBilik() {
   const q = $('#in-cari').value.trim().toLowerCase();
-  const senarai = S.bilik.filter(b => !q || (b.nama + ' ' + b.lokasi).toLowerCase().indexOf(q) >= 0);
+  const senarai = S.bilik.filter(b => !q || (b.nama + ' ' + (b.lokasi || '')).toLowerCase().indexOf(q) >= 0);
   $('#bil-bilik').textContent = S.bilik.length + ' bilik';
   $('#senarai-bilik').innerHTML = senarai.length ? senarai.map(b => {
     const w = WARNA[S.bilik.indexOf(b) % WARNA.length];
@@ -489,7 +489,7 @@ function lukisBilik() {
       '<span class="kod" style="background:' + w[0] + ';color:' + w[1] + '">' + esc(singkatan(b.nama)) + '</span>' +
       '<span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:3px">' +
       '<span class="t1">' + esc(b.nama) + '</span>' +
-      '<span class="t2">' + esc(b.lokasi) + (b.kapasiti ? ' · ' + esc(b.kapasiti) + ' orang' : '') + '</span>' +
+      '<span class="t2">' + [b.lokasi ? esc(b.lokasi) : '', b.kapasiti ? esc(b.kapasiti) + ' orang' : ''].filter(Boolean).join(' · ') + '</span>' +
       '<span class="t2">Penyelaras: ' + esc(b.penyelaras) + '</span></span>' +
       '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5A6478" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>' +
       '</button>';
