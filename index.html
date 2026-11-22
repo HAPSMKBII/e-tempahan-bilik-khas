@@ -26,7 +26,10 @@ html,body{margin:0;background:var(--latar);color:var(--teks);font-family:'Plus J
 button,input,textarea{font:inherit;color:inherit}
 
 /* Log masuk */
-.hero{background:var(--utama);padding:64px 28px 92px;display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:0 0 32px 32px;text-align:center}
+#v-login:not([hidden]){display:flex;flex-direction:column;min-height:100vh}
+.oleh{margin:0 0 10px;font-size:12px;font-weight:600;color:#DCE6F7;letter-spacing:.02em}
+.kaki{margin-top:auto;padding:14px 24px calc(18px + env(safe-area-inset-bottom));font-size:12px;font-weight:700;color:#3B465C;text-align:center;border-top:1px solid var(--garis2)}
+.hero{background:var(--utama);padding:20px 28px 92px;display:flex;flex-direction:column;align-items:center;gap:12px;border-radius:0 0 32px 32px;text-align:center}
 .logo{width:72px;height:72px;border-radius:20px;background:#fff;display:flex;align-items:center;justify-content:center}
 .hero h1{margin:0;font-size:24px;font-weight:800;color:#fff}
 .hero p{margin:0;font-size:14px;color:#DCE6F7;font-weight:700;letter-spacing:.06em}
@@ -133,6 +136,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
   <!-- ===================== LOG MASUK ===================== -->
   <section id="v-login">
     <div class="hero">
+      <p class="oleh">Oleh Cikgu HAP - SMK Bugaya II</p>
       <img src="ikon-192.png" alt="" width="80" height="80" style="width:80px;height:80px;border-radius:20px;box-shadow:0 6px 18px rgba(0,0,0,.18)">
       <h1>e-Tempahan Bilik Khas</h1>
       <p>SMK BUGAYA II</p>
@@ -160,6 +164,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja</p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
