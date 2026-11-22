@@ -88,6 +88,18 @@ main{padding:0 20px 110px}
 .kepala-bilik .t2{color:#DCE6F7}
 .jadual{background:#fff;border:1.5px dashed var(--garis);border-radius:14px;padding:10px 12px;font-size:13px;display:flex;flex-direction:column;gap:8px;margin-top:4px}
 .jadual:empty{display:none}
+.kal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.kal-grid .nh{font-size:11px;font-weight:700;color:var(--redup);text-align:center;padding:2px 0 4px}
+.kal-hari{position:relative;height:44px;border:1.5px solid transparent;border-radius:12px;background:#F6F8FB;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;padding:0;font-size:15px;font-weight:700;color:var(--teks)}
+.kal-hari.luar{background:transparent;color:#AEB5C2;font-weight:500}
+.kal-hari:disabled{cursor:default;background:transparent;color:#B8BECA;font-weight:500}
+.kal-hari.ini{border-color:#AFC3E3}
+.kal-hari[aria-pressed="true"]{background:var(--utama);color:#fff;border-color:var(--utama)}
+.titik{display:flex;gap:3px;height:6px}
+.titik i{width:6px;height:6px;border-radius:50%;display:block}
+.titik .l{background:#1D9A55}.titik .m{background:#E0A019}
+.kal-hari[aria-pressed="true"] .titik .l{background:#7EE2A8}.kal-hari[aria-pressed="true"] .titik .m{background:#FFD27A}
+.butiran{background:#F6F8FB;border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
 .minggu{background:#fff;border:1.5px solid var(--garis2);border-radius:16px;padding:10px;margin-top:4px;display:flex;flex-direction:column;gap:6px}
 .minggu .kepala{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 4px}
 .ikon-kecil{width:40px;height:40px;border-radius:12px;border:1.5px solid var(--garis);background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--teks)}
@@ -188,7 +200,7 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
       <button type="button" class="btn utama kecil" id="b-pasang" hidden style="width:auto;padding:0 16px">Pasang</button>
     </div>
     <p class="nota">Lupa kata laluan? Hubungi pentadbir sistem sekolah.<br>Tukar kata laluan selepas log masuk kali pertama.</p>
-    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.5.1 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
+    <p class="kaki">Untuk kegunaan guru SMK Bugaya II sahaja<span class="versi">Versi 1.6 · 22 November 2026</span><span class="versi">Oleh Cikgu HAP - SMK Bugaya II</span></p>
   </section>
 
   <!-- ===================== APLIKASI ===================== -->
@@ -228,17 +240,24 @@ nav.bawah button[aria-current="page"]{color:var(--utama);font-weight:800}
           </div>
         </div>
         <form id="f-tempah" class="borang">
-          <label for="in-tarikh">Tarikh penggunaan</label>
-          <input id="in-tarikh" type="date" required>
-          <span class="t2" id="nota-tarikh"></span>
+          <span class="t1" style="font-size:13px;color:#3B465C;margin-top:6px">Pilih tarikh penggunaan</span>
+          <input id="in-tarikh" type="hidden">
           <div class="minggu" id="minggu">
             <div class="kepala">
-              <button type="button" class="ikon-kecil" id="mg-sebelum" aria-label="Minggu sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+              <button type="button" class="ikon-kecil" id="mg-sebelum" aria-label="Bulan sebelumnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
               <span class="t1" id="mg-tajuk" style="font-size:13px;text-align:center"></span>
-              <button type="button" class="ikon-kecil" id="mg-selepas" aria-label="Minggu seterusnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+              <button type="button" class="ikon-kecil" id="mg-selepas" aria-label="Bulan seterusnya"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
             </div>
-            <div id="mg-hari" style="display:flex;flex-direction:column;gap:6px" aria-live="polite"></div>
-            <span class="t2" style="padding:2px 4px">Tekan hari untuk memilih tarikh. <span class="slot l">Lulus</span> <span class="slot m">Menunggu</span></span>
+            <div class="kal-grid" aria-hidden="true">
+              <span class="nh">Isn</span><span class="nh">Sel</span><span class="nh">Rab</span><span class="nh">Kha</span><span class="nh">Jum</span><span class="nh">Sab</span><span class="nh">Ahd</span>
+            </div>
+            <div class="kal-grid" id="mg-hari"></div>
+            <div style="display:flex;gap:12px;align-items:center;padding:2px 4px;font-size:11px;color:var(--redup)">
+              <span style="display:flex;align-items:center;gap:4px"><span class="titik"><i class="l"></i></span>Diluluskan</span>
+              <span style="display:flex;align-items:center;gap:4px"><span class="titik"><i class="m"></i></span>Menunggu</span>
+            </div>
+            <div class="butiran" id="mg-butiran" aria-live="polite"></div>
+            <span class="t2" id="nota-tarikh" style="padding:0 4px"></span>
           </div>
           <div class="dua">
             <div><label for="in-mula">Masa mula</label><input id="in-mula" type="time" step="300" required></div>
@@ -352,6 +371,7 @@ const $ = (s) => document.querySelector(s);
 const $$ = (s) => Array.from(document.querySelectorAll(s));
 const SEKOLAH = document.body.dataset.sekolah || '';
 const HARI = ['Ahd', 'Isn', 'Sel', 'Rab', 'Kha', 'Jum', 'Sab'];
+const BULAN_PENUH = ['Januari', 'Februari', 'Mac', 'April', 'Mei', 'Jun', 'Julai', 'Ogos', 'September', 'Oktober', 'November', 'Disember'];
 const BULAN = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
 const STATUS = { MENUNGGU: ['Menunggu', 'c-tunggu'], DILULUSKAN: ['Diluluskan', 'c-lulus'], DITOLAK: ['Ditolak', 'c-tolak'], DIBATALKAN: ['Dibatalkan', 'c-batal'] };
 const WARNA = [['#E4ECFA', '#1E4B8F'], ['#E2F3F1', '#0F6E66'], ['#F1E6F7', '#6B2E8F'], ['#FBEBDD', '#9A3412']];
@@ -505,69 +525,99 @@ function bukaTempah(id) {
   $('#tb-nama').textContent = S.pilih.nama;
   $('#tb-info').textContent = 'Penyelaras: ' + S.pilih.penyelaras + (S.pilih.lokasi ? ' · ' + S.pilih.lokasi : '');
   const tar = $('#in-tarikh');
-  tar.min = t.minTarikh; tar.max = t.maksTarikh;
   if (!tar.value || tar.value < t.minTarikh || tar.value > t.maksTarikh) tar.value = t.minTarikh;
   ['#in-mula', '#in-tamat'].forEach(s => { $(s).min = t.masaAwal; $(s).max = t.masaAkhir; });
-  $('#nota-tarikh').textContent = 'Tempahan dibuka dari ' + tarikhPapar(t.minTarikh) + ' hingga ' + tarikhPapar(t.maksTarikh) + '. Masa: ' + t.masaAwal + '–' + t.masaAkhir + '.';
+  $('#nota-tarikh').textContent = 'Tempahan dibuka ' + tarikhPapar(t.minTarikh).replace(/^\w+, /, '') + ' – ' + tarikhPapar(t.maksTarikh).replace(/^\w+, /, '') + ', jam ' + t.masaAwal + '–' + t.masaAkhir + '.';
   $('#e-tempah').textContent = '';
-  S.mg = isnin(tar.value);
+  S.bln = tar.value.slice(0, 7);
   $('#in-ulang').checked = false; $('#kotak-ulang').hidden = true;
   bukaPanel('tempah');
   muatJadual();
 }
 
+/* ---------- Kalendar sebulan ---------- */
 async function muatJadual() {
   const el = $('#mg-hari');
   if (!S.pilih) { el.innerHTML = ''; return; }
-  const t = S.tetapan, mula = S.mg || isnin($('#in-tarikh').value || t.minTarikh);
-  S.mg = mula;
-  const akhir = tambahHari(mula, 6);
-  $('#mg-tajuk').textContent = tarikhPapar(mula).replace(/^\w+, /, '') + ' – ' + tarikhPapar(akhir).replace(/^\w+, /, '');
-  $('#mg-sebelum').disabled = tambahHari(mula, -1) < t.minTarikh;
-  $('#mg-selepas').disabled = tambahHari(mula, 7) > t.maksTarikh;
-  el.innerHTML = '<span class="t2" style="padding:6px 4px">Menyemak jadual bilik…</span>';
+  const t = S.tetapan;
+  const bln = S.bln || ($('#in-tarikh').value || t.minTarikh).slice(0, 7);
+  S.bln = bln;
+  const awal = bln + '-01';
+  const akhir = tambahHari(tambahHari(awal, 32).slice(0, 7) + '-01', -1); // hari terakhir bulan
+  const mula = isnin(awal);
+  const bil = Math.ceil((Math.round((Date.parse(akhir) - Date.parse(mula)) / 864e5) + 1) / 7) * 7;
+  const p = bln.split('-').map(Number);
+  $('#mg-tajuk').textContent = BULAN_PENUH[p[1] - 1] + ' ' + p[0];
+  $('#mg-sebelum').disabled = tambahHari(awal, -1) < t.minTarikh;
+  $('#mg-selepas').disabled = tambahHari(akhir, 1) > t.maksTarikh;
+  if (!el.children.length) el.innerHTML = '<span class="t2" style="grid-column:1/-1;padding:16px 4px;text-align:center">Memuatkan kalendar…</span>';
+  el.style.opacity = '.5';
   try {
-    const r = await panggil('jadualMinggu', S.token, S.pilih.id, mula);
-    if (mula !== S.mg) return; // minggu sudah ditukar
-    if (r.tetapan) S.tetapan = r.tetapan;
-    lukisMinggu(r.hari);
-  } catch (e) { el.innerHTML = '<span class="ralat">' + esc(mesej(e)) + '</span>'; }
+    const hari = await ambilJulat(mula, bil);
+    if (bln !== S.bln) return; // bulan sudah ditukar
+    lukisBulan(hari, bln);
+  } catch (e) { el.innerHTML = '<span class="ralat" style="grid-column:1/-1">' + esc(mesej(e)) + '</span>'; }
+  finally { el.style.opacity = ''; }
 }
 
-function lukisMinggu(hari) {
-  S.hariMinggu = hari;
+/** Ambil jadual bagi 'bil' hari. Pelayan baharu memulangkan semua sekali gus; pelayan lama 7 hari setiap panggilan. */
+async function ambilJulat(mula, bil) {
+  const r = await panggil('jadualMinggu', S.token, S.pilih.id, mula, bil);
+  if (r.tetapan) S.tetapan = r.tetapan;
+  let hari = r.hari;
+  if (hari.length < bil) {
+    const baki = [];
+    for (let i = hari.length; i < bil; i += 7) baki.push(panggil('jadualMinggu', S.token, S.pilih.id, tambahHari(mula, i)));
+    (await Promise.all(baki)).forEach(x => { hari = hari.concat(x.hari); });
+  }
+  return hari.slice(0, bil);
+}
+
+function lukisBulan(hari, bln) {
+  S.hariBulan = {};
+  hari.forEach(h => { S.hariBulan[h.tarikh] = h.tempahan; });
   const t = S.tetapan, pilih = $('#in-tarikh').value;
   $('#mg-hari').innerHTML = hari.map(h => {
     const tutup = h.tarikh < t.minTarikh || h.tarikh > t.maksTarikh;
-    const p = h.tarikh.split('-').map(Number);
-    const namaHari = HARI[new Date(p[0], p[1] - 1, p[2]).getDay()];
-    const isi = h.tempahan.length
-      ? h.tempahan.map(x => '<span class="slot ' + (x.status === 'DILULUSKAN' ? 'l' : 'm') + '" title="' + esc(x.nama) + '">' + esc(x.mula) + '–' + esc(x.tamat) + '</span>').join('')
-      : '<span class="t2">' + (tutup ? (h.tarikh < t.minTarikh ? 'Tidak boleh ditempah' : 'Belum dibuka') : 'Kosong sepanjang hari') + '</span>';
-    return '<button type="button" class="hari" data-tarikh="' + h.tarikh + '" aria-pressed="' + (h.tarikh === pilih) + '"' + (tutup ? ' disabled' : '') + '>' +
-      '<span class="tkh"><span>' + namaHari + '</span><b>' + p[2] + '</b><span>' + BULAN[p[1] - 1] + '</span></span>' +
-      '<span class="isi">' + isi + '</span></button>';
+    const luar = h.tarikh.slice(0, 7) !== bln;
+    const l = h.tempahan.filter(x => x.status === 'DILULUSKAN').length, m = h.tempahan.length - l;
+    const titik = '<i class="l"></i>'.repeat(Math.min(l, 3)) + '<i class="m"></i>'.repeat(Math.min(m, 3 - Math.min(l, 3)));
+    const label = tarikhPapar(h.tarikh) + (h.tempahan.length ? ', ' + h.tempahan.length + ' tempahan' : ', kosong') + (tutup ? ', tidak boleh ditempah' : '');
+    return '<button type="button" class="kal-hari' + (luar ? ' luar' : '') + (h.tarikh === t.hariIni ? ' ini' : '') + '" data-tarikh="' + h.tarikh + '"' +
+      ' aria-pressed="' + (h.tarikh === pilih) + '" aria-label="' + esc(label) + '"' + (tutup ? ' disabled' : '') + '>' +
+      Number(h.tarikh.slice(8)) + '<span class="titik">' + titik + '</span></button>';
   }).join('');
+  lukisButiran();
   notaUlang();
 }
 
-function tukarMinggu(n) { S.mg = tambahHari(S.mg, 7 * n); muatJadual(); }
+function lukisButiran() {
+  const v = $('#in-tarikh').value, el = $('#mg-butiran');
+  const l = (S.hariBulan && S.hariBulan[v]) || null;
+  if (!v || l === null) { el.innerHTML = '<span class="t2">Tekan satu tarikh pada kalendar.</span>'; return; }
+  el.innerHTML = '<span class="t1" style="font-size:13px">' + esc(tarikhPapar(v)) + '</span>' +
+    (l.length ? l.map(x => '<div class="baris"><span class="t3"><b>' + esc(x.mula) + '–' + esc(x.tamat) + '</b> · ' + esc(x.nama) + '</span>' + cip(x.status) + '</div>').join('')
+      : '<span class="t2">Belum ada tempahan. Semua masa masih kosong.</span>');
+}
+
+function tukarMinggu(n) { // ‹ › kini menukar bulan
+  const p = S.bln.split('-').map(Number);
+  const d = new Date(Date.UTC(p[0], p[1] - 1 + n, 1, 12));
+  S.bln = d.toISOString().slice(0, 7);
+  muatJadual();
+}
 
 function pilihHari(ev) {
   const b = ev.target.closest('[data-tarikh]');
   if (!b || b.disabled) return;
   $('#in-tarikh').value = b.dataset.tarikh;
-  $$('#mg-hari .hari').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  if (b.dataset.tarikh.slice(0, 7) !== S.bln) { S.bln = b.dataset.tarikh.slice(0, 7); muatJadual(); return; }
+  $$('#mg-hari .kal-hari').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+  lukisButiran();
   notaUlang();
 }
 
-function tarikhDiubah() {
-  const v = $('#in-tarikh').value;
-  if (!v) return;
-  const m = isnin(v);
-  if (m !== S.mg) { S.mg = m; muatJadual(); }
-  else { $$('#mg-hari .hari').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.tarikh === v))); notaUlang(); }
-}
+function tarikhDiubah() {}
 
 function notaUlang() {
   const kotak = $('#kotak-ulang'), on = $('#in-ulang').checked;
@@ -592,7 +642,8 @@ async function hantarTempahan(ev) {
     kelas: $('#in-kelas').value.trim(), tujuan: $('#in-tujuan').value.trim(),
     ulang: $('#in-ulang').checked ? Number($('#in-minggu').value) : 1
   };
-  if (!d.tarikh || !d.mula || !d.tamat || !d.kelas || !d.tujuan) { err.textContent = 'Sila lengkapkan semua ruangan.'; return; }
+  if (!d.tarikh) { err.textContent = 'Sila pilih tarikh pada kalendar.'; return; }
+  if (!d.mula || !d.tamat || !d.kelas || !d.tujuan) { err.textContent = 'Sila lengkapkan semua ruangan.'; return; }
   if (d.tamat <= d.mula) { err.textContent = 'Masa tamat mesti selepas masa mula.'; return; }
   b.disabled = true; b.textContent = 'Menghantar…';
   try {
@@ -837,7 +888,6 @@ $('#b-lihat').addEventListener('click', () => {
 $('#in-cari').addEventListener('input', lukisBilik);
 $('#senarai-bilik').addEventListener('click', ev => { const k = ev.target.closest('[data-id]'); if (k) bukaTempah(k.dataset.id); });
 $('#b-balik').addEventListener('click', () => bukaPanel('bilik'));
-$('#in-tarikh').addEventListener('change', tarikhDiubah);
 $('#mg-hari').addEventListener('click', pilihHari);
 $('#mg-sebelum').addEventListener('click', () => tukarMinggu(-1));
 $('#mg-selepas').addEventListener('click', () => tukarMinggu(1));
