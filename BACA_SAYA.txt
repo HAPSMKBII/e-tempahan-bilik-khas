@@ -1,0 +1,53 @@
+e-TEMPAHAN BILIK KHAS SMK BUGAYA II - CARA HOS DI GITHUB
+=======================================================
+
+Folder ini mengandungi 10 fail. JANGAN tukar nama fail.
+  index.html             - aplikasi tempahan (paparan telefon)
+  tetapan.js             - pautan ke pelayan Apps Script (API_URL)
+  manifest.webmanifest   - maklumat aplikasi (nama, ikon)
+  sw.js                  - membolehkan aplikasi dibuka tanpa internet
+  ikon-*.png, apple-touch-icon.png, favicon.png - ikon aplikasi
+  BACA_SAYA.txt          - panduan ini
+
+PENTING: Data tempahan disimpan dalam Google Sheet anda melalui Apps Script.
+Aplikasi boleh DIBUKA tanpa internet, tetapi log masuk, tempahan dan
+kelulusan MEMERLUKAN internet.
+
+LANGKAH A: SEDIAKAN PELAYAN (Apps Script)
+1. Dalam Apps Script, gantikan Code.gs dengan versi baharu (ada fungsi doPost).
+2. Dalam Code.gs, isi  PAUTAN_APLIKASI: ''  dengan pautan GitHub Pages
+   (langkah B4), contohnya 'https://hapsmkbii.github.io/e-tempahan-bilik-khas/'.
+3. Deploy > Manage deployments > ikon pensel > Version: New version > Deploy.
+   (Kali pertama: Deploy > New deployment > Web app)
+   - Execute as: Me
+   - Who has access: Anyone   <- WAJIB "Anyone" untuk aplikasi GitHub
+4. Salin "Web app URL" (berakhir dengan /exec).
+
+LANGKAH B: GITHUB PAGES
+1. Di https://github.com, cipta repository baharu (Public),
+   contohnya: e-tempahan-bilik-khas
+2. Tekan "uploading an existing file" dan muat naik KESEMUA fail (bukan folder).
+3. Buka tetapan.js > ikon pensel (Edit) > tampal pautan /exec:
+       var API_URL = 'https://script.google.com/macros/s/..../exec';
+   > Commit changes.
+4. Settings > Pages > Branch: main > Save.
+   Pautan: https://hapsmkbii.github.io/e-tempahan-bilik-khas/
+
+LANGKAH C: PASANG DI TELEFON
+- Android (Chrome): buka pautan > tekan butang "Pasang" di skrin log masuk
+  (atau menu titik tiga > Install app / Add to Home screen).
+- iPhone (Safari): buka pautan > butang Kongsi > Add to Home Screen.
+Ikon e-Tempahan akan muncul di skrin utama seperti aplikasi biasa.
+
+KEMAS KINI PADA MASA HADAPAN
+1. Gantikan index.html dengan versi baharu.
+2. Buka sw.js dan tukar  VERSI = 'etempahan-v1.0-...'  kepada versi baharu
+   (contoh 'etempahan-v1.1-2026-12-01').
+3. Muat naik semula. Telefon guru menerima versi baharu apabila dibuka dengan internet.
+   Jika hanya Code.gs berubah: deploy versi baharu di Apps Script sahaja
+   (pautan /exec kekal sama, tidak perlu ubah GitHub).
+
+MASALAH LAZIM
+- "Aplikasi belum disambungkan ke pelayan": API_URL dalam tetapan.js masih kosong.
+- "Pelayan tidak memberi jawapan yang sah": Apps Script tidak di-deploy dengan
+  akses "Anyone", atau pautan /exec salah, atau Code.gs lama (tiada doPost).
